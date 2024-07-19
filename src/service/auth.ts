@@ -11,17 +11,15 @@ interface AuthResponse {
 
 export const signup = async (
   username: string,
-  email: string,
   password: string
 ): Promise<AuthResponse> => {
-  const existedUser = await User.findOne({ email: email });
+  const existedUser = await User.findOne({ username: username });
   if (existedUser) {
     throw new Error("Email already exists");
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await User.create({
     username,
-    email,
     password: hashedPassword,
   });
 
@@ -33,12 +31,11 @@ export const signup = async (
 };
 
 export const signin = async (
-  usernameOrEmail: string,
+  username: string,
   password: string
 ): Promise<AuthResponse> => {
   const user = await User.findOne({
-    username: usernameOrEmail,
-    $or: [{ email: usernameOrEmail }],
+    username: username,
   });
   if (!user) {
     throw new Error("User not found");

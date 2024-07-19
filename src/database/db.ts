@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URI: string = "mongodb://localhost:27017/user_services";
+const MONGO_URI: string = "mongodb://localhost:27017/affiliate-website";
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
