@@ -22,11 +22,8 @@ export const signup = async (
     username,
     password: hashedPassword,
   });
-
   await user.save();
-
   const token = jwt.sign({ id: user._id }, JWT_SECRET);
-
   return { user, token };
 };
 
