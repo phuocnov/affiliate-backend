@@ -10,9 +10,9 @@ export interface IProduct extends Document {
   review_count: number;
   all_time_quantity_sold: number;
   thumbnail_url: string;
-  brand: ObjectId;
-  category: ObjectId;
-  ecommerce_site: ObjectId;
+  brand: string;
+  category: string;
+  ecommerce_site: string;
   affiliate_link: string;
   visit: number;
 }
@@ -57,15 +57,15 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   brand: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Brand",
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Category",
   },
   ecommerce_site: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "EcommerceSite",
   },
   affiliate_link: {
