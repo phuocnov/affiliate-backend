@@ -1,6 +1,5 @@
 import express from "express";
-import { signin, signup } from "../../service/auth";
-import validateToken from "../../middlewares/validateToken";
+import { signin, signup, validateToken } from "../../service/auth";
 
 const auth = express.Router();
 auth.get("/health-check", (req, res) => {
@@ -35,23 +34,13 @@ auth.post("/signin", async (req, res) => {
   }
 });
 
-// auth.post("/validate-token", async (req, res) => {
-//   try {
-//     const token = req.headers.authorization?.split(" ")[1];
-//     if (!token) {
-//       throw new Error("Token is required");
-//     }
-//     const user = await validateToken(token);
-//     res.status(200).json(user);
-//   } catch (error) {
-//     if (error instanceof Error)
-//       res.status(400).json({ message: error.message });
-//   }
-// });
-
-auth.get("/current", validateToken, (req: any, res) => {
+auth.post("/validate-token", async (req, res) => {
   try {
-    const { user } = req;
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      throw new Error("Token is required");
+    }
+    const user = await validateToken(token);
     res.status(200).json(user);
   } catch (error) {
     if (error instanceof Error)

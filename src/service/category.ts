@@ -23,7 +23,7 @@ export const createCategory = async ({
   return category;
 };
 
-export const getCategorys = async ({
+export const getCategories = async ({
   code,
   desc,
 }: {

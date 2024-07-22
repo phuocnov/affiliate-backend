@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 import Product, { IProduct } from "../models/product";
 
 export interface ProductDTO {
@@ -113,7 +112,13 @@ export const updateProduct = async (product: ProductDTO) => {
   return product;
 };
 
-export const deleteProduct = async ({ product_id, shop_id }: ProductDTO) => {
+export const deleteProduct = async ({
+  product_id,
+  shop_id,
+}: {
+  product_id: string;
+  shop_id: string;
+}) => {
   const product = await Product.findOne({
     product_id: product_id,
     shop_id: shop_id,
@@ -122,4 +127,23 @@ export const deleteProduct = async ({ product_id, shop_id }: ProductDTO) => {
     throw new Error("Product not found");
   }
   await Product.deleteOne({ _id: product._id });
+};
+
+export const visitProduct = async ({
+  product_id,
+  shop_id,
+}: {
+  product_id: string;
+  shop_id: string;
+}) => {
+  const product = await Product.findOne({
+    product_id: product_id,
+    shop_id: shop_id,
+  });
+  if (!product) {
+    throw new Error("Product not found");
+  }
+  product.visit += 1;
+  await product.save();
+  return product;
 };
