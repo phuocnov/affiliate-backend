@@ -8,10 +8,13 @@ import {
 
 const category = express.Router();
 
-category.get("/", (req, res) => {
+category.get("/", async (req, res) => {
   try {
-    const { code } = req.query;
-    const categories = getCategories({ code: code as string });
+    const { code, desc } = req.query;
+    const categories = await getCategories({
+      code: code as string,
+      desc: desc as string,
+    });
     res.status(200).json(categories);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -22,10 +25,10 @@ category.get("/", (req, res) => {
   }
 });
 
-category.post("/", (req, res) => {
+category.post("/", async (req, res) => {
   try {
     const { code, desc } = req.body;
-    const newCategory = createCategory({ code, desc });
+    const newCategory = await createCategory({ code, desc });
     res.status(201).json(newCategory);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -36,11 +39,11 @@ category.post("/", (req, res) => {
   }
 });
 
-category.put("/:code", (req, res) => {
+category.put("/:code", async (req, res) => {
   try {
     const { code } = req.params;
     const { desc } = req.body;
-    const updatedCategory = updateCategory({ code, desc });
+    const updatedCategory = await updateCategory({ code, desc });
     res.status(200).json(updatedCategory);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -51,10 +54,10 @@ category.put("/:code", (req, res) => {
   }
 });
 
-category.delete("/:code", (req, res) => {
+category.delete("/:code", async (req, res) => {
   try {
     const { code } = req.params;
-    deleteCategory({ code });
+    await deleteCategory({ code });
     res.status(204).send();
   } catch (error) {
     let errorMessage = "Something went wrong";

@@ -7,10 +7,10 @@ import {
 
 const userRole = express.Router();
 
-userRole.get("/", (req, res) => {
+userRole.get("/", async (req, res) => {
   try {
     const { roleName, username } = req.query;
-    const userRoles = getUserRoles({
+    const userRoles = await getUserRoles({
       user_id: username as string,
       role_id: roleName as string,
     });
@@ -24,10 +24,10 @@ userRole.get("/", (req, res) => {
   }
 });
 
-userRole.post("/", (req, res) => {
+userRole.post("/", async (req, res) => {
   try {
     const { username, roleName } = req.body;
-    const newUserRole = createUserRole({
+    const newUserRole = await createUserRole({
       user_id: username,
       role_id: roleName,
     });
@@ -41,10 +41,10 @@ userRole.post("/", (req, res) => {
   }
 });
 
-userRole.delete("/", (req, res) => {
+userRole.delete("/", async (req, res) => {
   try {
     const { username, roleName } = req.body;
-    deleteUserRole({
+    await deleteUserRole({
       user_id: username,
       role_id: roleName,
     });

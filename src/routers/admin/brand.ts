@@ -9,10 +9,10 @@ import {
 
 const brand = express.Router();
 
-brand.get("/", (req, res) => {
+brand.get("/", async (req, res) => {
   try {
     const { code } = req.query;
-    const brands = getBrands({ code: code as string });
+    const brands = await getBrands({ code: code as string });
     res.status(200).json(brands);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -23,10 +23,10 @@ brand.get("/", (req, res) => {
   }
 });
 
-brand.post("/", (req, res) => {
+brand.post("/", async (req, res) => {
   try {
     const { code, desc } = req.body;
-    const newBrand = createBrand({ code, desc });
+    const newBrand = await createBrand({ code, desc });
     res.status(201).json(newBrand);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -37,11 +37,11 @@ brand.post("/", (req, res) => {
   }
 });
 
-brand.put("/:code", (req, res) => {
+brand.put("/:code", async (req, res) => {
   try {
     const { code } = req.params;
     const { desc } = req.body;
-    const updatedBrand = updateBrand({ code, desc });
+    const updatedBrand = await updateBrand({ code, desc });
     res.status(200).json(updatedBrand);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -52,10 +52,10 @@ brand.put("/:code", (req, res) => {
   }
 });
 
-brand.delete("/:code", (req, res) => {
+brand.delete("/:code", async (req, res) => {
   try {
     const { code } = req.params;
-    deleteBrand({ code });
+    await deleteBrand({ code });
     res.status(204).send();
   } catch (error) {
     let errorMessage = "Something went wrong";

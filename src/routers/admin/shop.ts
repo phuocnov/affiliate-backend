@@ -65,7 +65,7 @@ shop.post("/", async (req, res) => {
       affiliate_link: affiliate_link as string,
       visit: Number(visit),
     });
-    res.status(201).json({ message: "Shop created" });
+    res.status(201).json({ newShop });
   } catch (error) {
     let errorMessage = "Something went wrong";
     if (error instanceof Error) {

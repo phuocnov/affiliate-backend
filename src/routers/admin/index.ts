@@ -17,7 +17,7 @@ admin.use("/user", user);
 admin.use("/product", product);
 admin.use("/brand", brand);
 admin.use("/brand", brand);
-admin.use("/categoty", category);
+admin.use("/category", category);
 admin.use("/permission", permission);
 admin.use("/role", role);
 admin.use("/role-permission", rolePermission);

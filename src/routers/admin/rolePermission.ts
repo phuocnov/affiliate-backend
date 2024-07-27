@@ -9,10 +9,10 @@ import {
 
 const rolePermission = express.Router();
 
-rolePermission.get("/", (req, res) => {
+rolePermission.get("/", async (req, res) => {
   try {
     const { roleName, permissionCode } = req.query;
-    const rolePermissions = getRolePermissions({
+    const rolePermissions = await getRolePermissions({
       role_id: roleName as string,
       permission_id: permissionCode as string,
     });
@@ -26,10 +26,10 @@ rolePermission.get("/", (req, res) => {
   }
 });
 
-rolePermission.post("/", (req, res) => {
+rolePermission.post("/", async (req, res) => {
   try {
     const { roleName, permissionCode } = req.body;
-    const newRolePermission = createRolePermission({
+    const newRolePermission = await createRolePermission({
       role_id: roleName,
       permission_id: permissionCode,
     });
@@ -43,10 +43,10 @@ rolePermission.post("/", (req, res) => {
   }
 });
 
-rolePermission.put("/", (req, res) => {
+rolePermission.put("/", async (req, res) => {
   try {
     const { roleName, permissionCode } = req.body;
-    const updatedRolePermission = updateRolePermission({
+    const updatedRolePermission = await updateRolePermission({
       role_id: roleName,
       permission_id: permissionCode,
     });
@@ -60,10 +60,10 @@ rolePermission.put("/", (req, res) => {
   }
 });
 
-rolePermission.delete("/", (req, res) => {
+rolePermission.delete("/", async (req, res) => {
   try {
     const { roleName, permissionCode } = req.body;
-    deleteRolePermission({
+    await deleteRolePermission({
       role_id: roleName,
       permission_id: permissionCode,
     });

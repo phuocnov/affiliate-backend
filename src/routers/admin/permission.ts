@@ -8,10 +8,10 @@ import {
 
 const permission = express.Router();
 
-permission.get("/", (req, res) => {
+permission.get("/", async (req, res) => {
   try {
     const { code } = req.query;
-    const permissions = getPermissions({ code: code as string });
+    const permissions = await getPermissions({ code: code as string });
     res.status(200).json(permissions);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -22,10 +22,10 @@ permission.get("/", (req, res) => {
   }
 });
 
-permission.post("/", (req, res) => {
+permission.post("/", async (req, res) => {
   try {
     const { code, desc } = req.body;
-    const newPermission = createPermission({ code, desc });
+    const newPermission = await createPermission({ code, desc });
     res.status(201).json(newPermission);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -36,11 +36,11 @@ permission.post("/", (req, res) => {
   }
 });
 
-permission.put("/:code", (req, res) => {
+permission.put("/:code", async (req, res) => {
   try {
     const { code } = req.params;
     const { desc } = req.body;
-    const updatedPermission = updatePermission({ code, desc });
+    const updatedPermission = await updatePermission({ code, desc });
     res.status(200).json(updatedPermission);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -51,10 +51,10 @@ permission.put("/:code", (req, res) => {
   }
 });
 
-permission.delete("/:code", (req, res) => {
+permission.delete("/:code", async (req, res) => {
   try {
     const { code } = req.params;
-    deletePermission({ code });
+    await deletePermission({ code });
     res.status(204).send();
   } catch (error) {
     let errorMessage = "Something went wrong";

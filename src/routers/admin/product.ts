@@ -9,7 +9,7 @@ import {
 
 const product = express.Router();
 
-product.get("/", (req, res) => {
+product.get("/", async (req, res) => {
   try {
     const {
       product_id,
@@ -27,7 +27,7 @@ product.get("/", (req, res) => {
       price,
       short_url,
     } = req.query;
-    const products = getProducts({
+    const products = await getProducts({
       product_id: product_id as string,
       shop_id: shop_id as string,
       affiliate_link: affiliate_link as string,
@@ -37,6 +37,11 @@ product.get("/", (req, res) => {
       thumbnail_url: thumbnail_url as string,
       visit: Number(visit),
       short_url: short_url as string,
+      all_time_quantity_sold: Number(all_time_quantity_sold),
+      review_count: Number(review_count),
+      rating_average: Number(rating_average),
+      original_price: Number(original_price),
+      price: Number(price),
     });
     res.status(200).json(products);
   } catch (error) {
@@ -48,7 +53,7 @@ product.get("/", (req, res) => {
   }
 });
 
-product.post("/", (req, res) => {
+product.post("/", async (req, res) => {
   try {
     const {
       product_id,
@@ -66,7 +71,7 @@ product.post("/", (req, res) => {
       price,
       short_url,
     } = req.body;
-    const newProduct = createProduct({
+    const newProduct = await createProduct({
       product_id,
       shop_id,
       affiliate_link,
@@ -92,7 +97,7 @@ product.post("/", (req, res) => {
   }
 });
 
-product.put("/:product_id", (req, res) => {
+product.put("/:product_id", async (req, res) => {
   try {
     const { product_id } = req.params;
     const {
@@ -110,7 +115,7 @@ product.put("/:product_id", (req, res) => {
       price,
       short_url,
     } = req.body;
-    const updatedProduct = updateProduct({
+    const updatedProduct = await updateProduct({
       product_id,
       shop_id,
       affiliate_link,
@@ -136,10 +141,10 @@ product.put("/:product_id", (req, res) => {
   }
 });
 
-product.delete("/:product_id/:shop_id", (req, res) => {
+product.delete("/:product_id/:shop_id", async (req, res) => {
   try {
     const { product_id, shop_id } = req.params;
-    deleteProduct({
+    await deleteProduct({
       product_id: product_id as string,
       shop_id: shop_id as string,
     });

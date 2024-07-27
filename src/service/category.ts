@@ -38,7 +38,7 @@ export const getCategories = async ({
     query.desc = { $regex: desc, $options: "i" };
   }
 
-  return Category.find(query);
+  return await Category.find(query);
 };
 
 export const updateCategory = async ({
