@@ -23,13 +23,17 @@ export const createUser = async ({
   return user;
 };
 
-export const getAllUsers = async ({
+export const getAllUsers = async (): Promise<IUser[]> => {
+  return User.find();
+};
+
+export const findUserByName = async ({
   username,
 }: {
   username?: string;
 }): Promise<IUser[]> => {
   return User.find({
-    username: username,
+    username: { $regex: username, $options: "i" },
   });
 };
 

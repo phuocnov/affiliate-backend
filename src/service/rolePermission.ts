@@ -31,10 +31,15 @@ export const getRolePermissions = async ({
   role_id?: string;
   permission_id?: string;
 }): Promise<IRolePermisson[]> => {
-  return RolePermission.find({
-    role_id: role_id,
-    permission_id: permission_id,
-  });
+  const query: any = {};
+  if (role_id) {
+    query.role_id = role_id;
+  }
+  if (permission_id) {
+    query.permission_id = permission_id;
+  }
+
+  return RolePermission.find(query);
 };
 
 export const updateRolePermission = async ({

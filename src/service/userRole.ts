@@ -31,10 +31,15 @@ export const getUserRoles = async ({
   user_id?: string;
   role_id?: string;
 }): Promise<IUserRole[]> => {
-  return UserRole.find({
-    user_id: user_id,
-    role_id: role_id,
-  });
+  const query: any = {};
+  if (user_id) {
+    query.user_id = user_id;
+  }
+  if (role_id) {
+    query.role_id = role_id;
+  }
+
+  return UserRole.find(query);
 };
 
 export const deleteUserRole = async ({

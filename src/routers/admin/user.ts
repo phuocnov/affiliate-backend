@@ -3,6 +3,7 @@ import {
   createUser,
   deleteUser,
   updateUser,
+  findUserByName,
   getAllUsers,
 } from "../../service/user";
 
@@ -22,10 +23,25 @@ user.post("/", (req, res) => {
   }
 });
 
-user.get("/", (req, res) => {
+// Route to handle requests without a username
+// user.get("/", async (req, res) => {
+//   try {
+//     const users = await getAllUsers();
+//     res.status(200).json(users);
+//   } catch (error) {
+//     let errorMessage = "Something went wrong";
+//     if (error instanceof Error) {
+//       errorMessage = error.message;
+//     }
+//     res.status(400).json({ message: errorMessage });
+//   }
+// });
+
+user.get("/", async (req, res) => {
   try {
     const { username } = req.query;
-    const users = getAllUsers({ username: username as string });
+    console.log(username);
+    const users = await findUserByName({ username: username as string });
     res.status(200).json(users);
   } catch (error) {
     let errorMessage = "Something went wrong";
@@ -50,9 +66,9 @@ user.put("/", (req, res) => {
   }
 });
 
-user.delete("/", (req, res) => {
+user.delete("/:username", (req, res) => {
   try {
-    const { username } = req.body;
+    const { username } = req.params;
     deleteUser({ username });
     res.status(204).send();
   } catch (error) {

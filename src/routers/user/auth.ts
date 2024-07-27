@@ -23,8 +23,8 @@ auth.post("/signup", async (req, res) => {
 
 auth.post("/signin", async (req, res) => {
   try {
-    const { usernameOrEmail, password } = req.body;
-    const user = await signin(usernameOrEmail, password);
+    const { username, password } = req.body;
+    const user = await signin(username, password);
     res.status(200).json(user);
   } catch (error) {
     let errorMessage = "Something went wrong";

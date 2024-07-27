@@ -30,10 +30,15 @@ export const getRoles = async ({
   code?: string;
   desc?: string;
 }): Promise<IRole[]> => {
-  return Role.find({
-    code: code,
-    desc: { $regex: desc, $options: "i" },
-  });
+  const query: any = {};
+  if (code) {
+    query.code = code;
+  }
+  if (desc) {
+    query.desc = { $regex: desc, $options: "i" };
+  }
+
+  return Role.find(query);
 };
 
 export const updateRole = async ({

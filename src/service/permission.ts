@@ -30,10 +30,15 @@ export const getPermissions = async ({
   code?: string;
   desc?: string;
 }): Promise<IPermission[]> => {
-  return Permission.find({
-    code: code,
-    desc: { $regex: desc, $options: "i" },
-  });
+  const query: any = {};
+  if (code) {
+    query.code = code;
+  }
+  if (desc) {
+    query.desc = { $regex: desc, $options: "i" };
+  }
+
+  return Permission.find(query);
 };
 
 export const updatePermission = async ({

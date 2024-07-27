@@ -30,10 +30,14 @@ export const getBrands = async ({
   code?: string;
   desc?: string;
 }): Promise<IBrand[]> => {
-  return Brand.find({
-    code: code,
-    desc: { $regex: desc, $options: "i" },
-  });
+  const query: any = {};
+  if (code) {
+    query.code = code;
+  }
+  if (desc) {
+    query.desc = { $regex: desc, $options: "i" };
+  }
+  return Brand.find(query);
 };
 
 export const updateBrand = async ({

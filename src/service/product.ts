@@ -9,12 +9,12 @@ export interface ProductDTO {
   rating_average?: number;
   review_count?: number;
   all_time_quantity_sold?: number;
-  thumbnail_url: string;
-  brand: string;
-  category: string;
-  ecommerce_site: string;
-  affiliate_link: string;
-  visit: number;
+  thumbnail_url?: string;
+  brand?: string;
+  category?: string;
+  ecommerce_site?: string;
+  affiliate_link?: string;
+  visit?: number;
 }
 
 export const createProduct = async ({
@@ -78,22 +78,30 @@ export const getProducts = async ({
   price,
   short_url,
 }: ProductDTO) => {
-  const products = await Product.find({
-    product_id: product_id,
-    shop_id: shop_id,
-    affiliate_link: affiliate_link,
-    ecommerce_site: ecommerce_site,
-    category: category,
-    brand: brand,
-    thumbnail_url: thumbnail_url,
-    visit: visit,
-    all_time_quantity_sold: all_time_quantity_sold,
-    review_count: review_count,
-    rating_average: rating_average,
-    original_price: original_price,
-    price: price,
-    short_url: short_url,
-  });
+  const query: any = {};
+
+  if (product_id !== undefined)
+    query.product_id = { $regex: product_id, $options: "i" };
+  if (shop_id !== undefined) query.shop_id = { $regex: shop_id, $options: "i" };
+  if (affiliate_link !== undefined)
+    query.affiliate_link = { $regex: affiliate_link, $options: "i" };
+  if (ecommerce_site !== undefined)
+    query.ecommerce_site = { $regex: ecommerce_site, $options: "i" };
+  if (category !== undefined)
+    query.category = { $regex: category, $options: "i" };
+  if (brand !== undefined) query.brand = { $regex: brand, $options: "i" };
+  if (thumbnail_url !== undefined)
+    query.thumbnail_url = { $regex: thumbnail_url, $options: "i" };
+  if (visit !== undefined) query.visit = visit;
+  if (all_time_quantity_sold !== undefined)
+    query.all_time_quantity_sold = all_time_quantity_sold;
+  if (review_count !== undefined) query.review_count = review_count;
+  if (rating_average !== undefined) query.rating_average = rating_average;
+  if (original_price !== undefined) query.original_price = original_price;
+  if (price !== undefined) query.price = price;
+  if (short_url !== undefined) query.short_url = short_url;
+
+  const products = await Product.find(query);
   return products;
 };
 

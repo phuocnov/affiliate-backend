@@ -57,3 +57,5 @@ userRole.delete("/", (req, res) => {
     res.status(400).json({ message: errorMessage });
   }
 });
+
+export default userRole;
